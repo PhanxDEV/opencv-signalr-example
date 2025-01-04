@@ -1,0 +1,20 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body>
+    <img id="webcamImage" />
+    <script src="https://unpkg.com/@microsoft/signalr@5.0.11/dist/browser/signalr.min.js"></script>
+    <script type="text/javascript">
+        const connection = new signalR.HubConnectionBuilder().withUrl("/image").build();
+        const imageTag = document.querySelector("#webcamImage");
+        connection.on("ReceiveNewImage", image => {
+            imageTag.src = `data:image/png;base64, ${image}`;
+        });
+
+        connection.start();
+    </script>
+</body>
+</html>
